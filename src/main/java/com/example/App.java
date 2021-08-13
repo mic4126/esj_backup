@@ -35,6 +35,7 @@ public class App {
             for (String link : links) {
                 driver.get(link);
                 String ch_name = driver.findElement(By.xpath("/html/body/div[3]/section/div/div[1]/h2")).getText();
+                System.out.println("Now backup: "+ch_name);
                 String content = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]"))
                         .getAttribute("innerHTML");
                 String text = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]")).getText();
