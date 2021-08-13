@@ -3,6 +3,7 @@ package com.example;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.openqa.selenium.By;
@@ -13,8 +14,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class App {
     public static void main(String[] args) {
         System.out.print("Paste ESJ link:");
-        var sc = new Scanner(System.in);
-        var url = sc.nextLine();
+        Scanner sc = new Scanner(System.in);
+        String url = sc.nextLine();
 
         final String catalog_regex = "http(s)?:\\/\\/www\\.esjzone\\.cc\\/detail\\/\\d+\\.html";
         final String novel_regex = "https:\\/\\/www\\.esjzone\\.cc\\/forum\\/\\d+\\/\\d+\\.html";
@@ -23,9 +24,9 @@ public class App {
         if (url.matches(catalog_regex)) {
             WebDriver driver = new ChromeDriver();
             driver.get(url);
-            var els = driver.findElements(By.xpath("//*[@id=\"chapterList\"]/a"));
+            List<WebElement> els = driver.findElements(By.xpath("//*[@id=\"chapterList\"]/a"));
             for (WebElement webElement : els) {
-                var href = webElement.getAttribute("href");
+                String href = webElement.getAttribute("href");
                 if (href.matches(novel_regex)) {
                     links.add(href);
                 }
@@ -33,10 +34,10 @@ public class App {
 
             for (String link : links) {
                 driver.get(link);
-                var ch_name = driver.findElement(By.xpath("/html/body/div[3]/section/div/div[1]/h2")).getText();
-                var content = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]"))
+                String ch_name = driver.findElement(By.xpath("/html/body/div[3]/section/div/div[1]/h2")).getText();
+                String content = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]"))
                         .getAttribute("innerHTML");
-                var text = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]")).getText();
+                String text = driver.findElement(By.xpath("//*[contains(@class,'forum-content')]")).getText();
                 File novel_html = new File(ch_name + ".html");
                 File novel_txt = new File(ch_name + ".txt");
                 try {
